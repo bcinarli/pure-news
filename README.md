@@ -11,5 +11,8 @@ Currently applicable on:
 * sabah.com.tr
 * milliyet.com.tr
 
+## How to install
+You can download and install the extension directly from [Google Chrome Webstore](https://chrome.google.com/webstore/detail/pure-news-only/ekidfifjmjkacbkamaoedkpcjeknihcp). It will inform you that extension can change the content in the listed websites above.
+
 ### Resources
 Icons: https://www.iconfinder.com/icons/2135787/current_events_news_newspaper_icon
