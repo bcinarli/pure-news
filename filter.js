@@ -2,9 +2,21 @@
  * cleaner.js
  **/
 
-console.log('Filtering the news');
-
 const current = window.location.href;
+let isDisabledForThisPage = false;
+let areVideosFiltered = false;
+
+chrome.storage.sync.get('alsoFilterVideos', result => {
+    areVideosFiltered = result.alsoFilterVideos || false;
+});
+
+chrome.storage.sync.get('disablePureNewsForThisPage', result => {
+    isDisabledForThisPage = result.disablePureNewsForThisPage || false;
+
+    if (!isDisabledForThisPage) {
+        start_filters();
+    }
+});
 
 const filterable_links = [
     // general links
@@ -15,7 +27,6 @@ const filterable_links = [
     'a[href*="/foto-galeri"]',
     'a[href*="/magazin-haberleri/"]',
     'a[href*="/magazin/"]',
-    'a[href*="/video"]',
     //news from hurriyet.com.tr
     'a[href*="/kelebek/"]',
     // news from posta.com.tr
@@ -42,23 +53,38 @@ const isSingleLink = link => {
     return isSingleLink;
 };
 
-const hasSibling = el => (el.nextSibling != null || el.previousSibling != null);
+const updateNotifications = notifications => {
+    console.log(chrome.browserAction);
+    chrome.browserAction.setBadgeText({text: notifications || ''});
+    console.log(notifications);
+};
 
-const unwanted_news = document.querySelectorAll(filterable_links.join(','));
-console.log('Total filtered news count: ', unwanted_news.length);
-unwanted_news.forEach(link => {
-    let parent = link.parentNode;
+const start_filters = () => {
+    console.log('Filtering the news');
 
-    if (parent.parentNode
-        && isSingleLink(link)
-        // dirty hack for milliyet's mega banner
-        && !link.matches('a[href*="-skorergaleri"]')) {
-        parent.parentNode.removeChild(parent);
+    if(areVideosFiltered) {
+        filterable_links.push('a[href*="/video/"]');
+        filterable_links.push('a[href*="video-"]');
     }
-    else {
-        parent.removeChild(link);
-    }
-});
+
+    const unwanted_news = document.querySelectorAll(filterable_links.join(','));
+    unwanted_news.forEach(link => {
+        let parent = link.parentNode;
+
+        if (parent.parentNode
+            && isSingleLink(link)
+            // dirty hack for milliyet's mega banner
+            && (!link.matches('a[href*="-skorergaleri"]') && !current.includes('ntv.com.tr'))) {
+            parent.parentNode.removeChild(parent);
+        }
+        else {
+            parent.removeChild(link);
+        }
+    });
+    console.log('Total filtered news count: ', unwanted_news.length);
+    //updateNotifications(unwanted_news.length);
+    updateCarousels(current);
+};
 
 const whichCarousel = page => {
     let theCarousel = null;
@@ -113,5 +139,3 @@ const updateCarousels = (page) => {
     let carousel = whichCarousel(page);
     carouselScript(carousel);
 };
-
-updateCarousels(current);

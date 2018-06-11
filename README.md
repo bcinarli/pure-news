@@ -10,6 +10,8 @@ Currently applicable on:
 * posta.com.tr
 * sabah.com.tr
 * milliyet.com.tr
+* ntv.com.tr
+* cnnturk.com
 
 ## How to install
 You can download and install the extension directly from [Google Chrome Webstore](https://chrome.google.com/webstore/detail/pure-news-only/ekidfifjmjkacbkamaoedkpcjeknihcp). It will inform you that extension can change the content in the listed websites above.

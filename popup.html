@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pure News</title>
+    <style>
+        .page-wrap {
+            font-family: 'Lato', "Helvetica Neue", Helvetica, arial, sans-serif;
+            width: 300px;
+            transition: opacity 0.2s;
+            color: #323439;
+        }
+
+        .page-wrap * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            padding: 10px 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .section {
+            position: relative;
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            font-size: 15px;
+            color: #323439;
+            line-height: 24px;
+            font-weight: 300;
+        }
+
+        .rule {
+            height: 1px;
+            margin: 15px 0;
+            border: 0;
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .popup-title {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .form-item {
+            position: relative;
+            display: block;
+            cursor: pointer;
+        }
+
+        .form-item.is-disabled {
+            cursor: default;
+        }
+
+        .option-desc {
+            text-overflow: ellipsis;
+            font-weight: bold;
+            overflow: hidden;
+            display: block;
+            white-space: nowrap;
+            max-width: 250px;
+        }
+
+        .checkbox {
+            display: none;
+        }
+
+        .checkbox-toggle {
+            border-radius: 20px;
+            background: #acacae !important;
+            height: 20px;
+            width: 42px;
+            border: 1px solid #acacae;
+            display: inline-block;
+            vertical-align: baseline;
+            margin-top: 2px;
+            transition: 0.2s background;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .checkbox-toggle.checkbox-disabled {
+            opacity: 0.25;
+            background: #acacae;
+            border: 1px solid #acacae;
+        }
+
+        .checkbox-toggle-inner {
+            left: 1px;
+            top: 1px;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 19px;
+            background: #fff !important;
+            display: inline-block;
+            transition: 0.2s left, 0.2s background;
+        }
+
+        input:checked ~ .checkbox-toggle {
+            background: #1cb7c3 !important;
+            border: none;
+            transition: 0.3s background;
+        }
+
+        input:checked ~ .checkbox-toggle .checkbox-toggle-inner {
+            background: #fff !important;
+            width: 16px;
+            height: 16px;
+            left: 24px;
+            top: 2px;
+            transition: 0.2s left, 0.2s background, 0.2s border;
+        }
+
+        .is-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+    <div class="header">
+        <h1 class="popup-title">Pure News</h1>
+    </div>
+    <div class="section supported-sites">
+        <div>
+            <label class="form-item">Activate filters on: <br>
+                <strong class="current-site option-desc"></strong>
+                <input type="checkbox" class="checkbox" id="activate-filter" value="on">
+                <div class="checkbox-toggle">
+                    <div class="checkbox-toggle-inner"></div>
+                </div>
+            </label>
+        </div>
+        <hr class="rule" />
+        <div>
+            <label class="form-item">Also filter videos: <br>
+                <input type="checkbox" class="checkbox" id="video-filter" value="on">
+                <div class="checkbox-toggle">
+                    <div class="checkbox-toggle-inner"></div>
+                </div>
+            </label>
+        </div>
+        <p class="help-desc is-hidden">To apply the new options, please refresh the page.</p>
+    </div>
+    <div class="section unsupported-sites">
+        <label class="form-item is-disabled">Filtering is not supported on<br>
+            <strong class="current-site option-desc"></strong>
+            <input type="checkbox" class="checkbox" value="on" disabled>
+            <div class="checkbox-toggle checkbox-disabled">
+                <div class="checkbox-toggle-inner"></div>
+            </div>
+        </label>
+    </div>
+    <div class="section">
+        <p>Your suggestions and bug reports you can visit <a href="https://github.com/bcinarli/pure-news"
+                                                             target="_blank">github</a> repository</p>
+    </div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
